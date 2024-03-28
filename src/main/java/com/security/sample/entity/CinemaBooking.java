@@ -16,7 +16,6 @@ public class CinemaBooking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bookingId;
-    private long categoryId;
     private long userId;
     private String date;
     private String time;

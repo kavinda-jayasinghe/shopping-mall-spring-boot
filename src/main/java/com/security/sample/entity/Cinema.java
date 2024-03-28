@@ -21,7 +21,7 @@ public class Cinema {
     private String showTime;
     private String img;
     private String duration;
-    private int bookedSeats;
+    private int seats;
     private String date;
     private String time;
 }

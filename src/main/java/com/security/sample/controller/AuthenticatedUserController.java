@@ -86,6 +86,10 @@ public class AuthenticatedUserController {
         bookingService.saveBookingAndPayment( cinemaBookingPaymentDto);
         return ResponseEntity.status(HttpStatus.OK).body("Data saved successfully");
     }
+//----------------------------------------------------------------clothing(customer)
+    //add to cart
+
+
 
 }
 
