@@ -1,5 +1,6 @@
 package com.security.sample.repository;
 
+import com.security.sample.dto.UserProfileDto;
 import com.security.sample.entity.Role;
 import com.security.sample.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 
     User findByRole(Role role);
+
+
 }

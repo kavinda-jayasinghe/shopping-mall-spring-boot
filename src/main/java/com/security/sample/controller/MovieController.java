@@ -17,8 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/authenticated-user")
 @CrossOrigin(origins = "http://localhost:4200")
-//if user(customers & sellers) is logged in to the system
-public class AuthenticatedUserController {
+
+public class MovieController {
     @Autowired
     private MovieService movieService;
     @Autowired
@@ -85,10 +85,6 @@ public class AuthenticatedUserController {
         bookingService.saveBookingAndPayment( cinemaBookingPaymentDto);
         return ResponseEntity.status(HttpStatus.OK).body("Data saved successfully");
     }
-
-
-
-
 
 }
 

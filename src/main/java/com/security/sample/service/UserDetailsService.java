@@ -6,8 +6,11 @@ import com.security.sample.entity.UserDetails;
 import com.security.sample.exception.NotFoundException;
 import com.security.sample.repository.UserDetailsRepo;
 import com.security.sample.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserDetailsService {
@@ -16,7 +19,7 @@ public class UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    public String userProfile(UserDetails userDetails, long id) {
+    public String userProfile(UserDetails userDetails, int id) {
         UserDetails userDetails1 = new UserDetails();
 
         userDetails1.setAddress(userDetails.getAddress());
@@ -34,12 +37,32 @@ public class UserDetailsService {
         }
     }
 
-//    public UserProfileDto getUserProfile(int id) {
-//  User user=userRepository.findById(id);
-//  UserDetails userDetails=userDetailsRepo.findByUserId(id);
-//
-//    }
+    //UPDATE USER PROFILE
+    public String profileUpdate(UserProfileDto userProfileDto, int id) {
 
 
+            Optional<User> optionalUser = userRepository.findById(id);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
 
-}
+                user.setEmail(userProfileDto.getEmail());
+                user.setFirstName(userProfileDto.getFirstName());
+                user.setLastName(userProfileDto.getLastName());
+
+                userRepository.save(user);
+
+            }
+                Optional<UserDetails> optionalUserDetails = userDetailsRepo.findByUserId(id);
+                if (optionalUserDetails.isPresent()) {
+                    UserDetails userDetails = optionalUserDetails.get();
+                    userDetails.setAddress(userProfileDto.getAddress());
+                    userDetails.setContact(userProfileDto.getContact());
+                    userDetails.setImage(userProfileDto.getImage());
+
+                    userDetailsRepo.save(userDetails);
+                }
+
+                    return "User profile updated successfully for id: " + id;
+                }
+
+    }
