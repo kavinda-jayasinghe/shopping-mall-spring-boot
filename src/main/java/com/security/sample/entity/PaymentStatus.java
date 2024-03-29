@@ -1,2 +1,6 @@
-package com.security.sample.entity;public enum PaymentStatus {
+package com.security.sample.entity;
+
+public enum PaymentStatus {
+    PENDING,
+    COMPLETED,
 }

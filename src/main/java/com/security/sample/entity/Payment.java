@@ -18,8 +18,8 @@ public class Payment {
     private Long paymentId;
 
     private long userId;
-    private long categoryId;
     private String paymentDate;
     private String paymentTime;
     private double amount;
+    private PaymentStatus paymentStatus;
 }

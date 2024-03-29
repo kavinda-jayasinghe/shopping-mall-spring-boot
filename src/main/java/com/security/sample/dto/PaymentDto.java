@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 public class PaymentDto {
 
     private long userId;
-    private long categoryId;
-    private String paymentDate;
-    private String paymentTime;
+
     private double amount;
 }

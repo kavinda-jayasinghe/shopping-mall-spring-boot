@@ -5,6 +5,7 @@ import com.security.sample.entity.Product;
 import com.security.sample.service.CartItemService;
 import com.security.sample.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class CartItemController {
         return cartItemService.addCartItem(cartItem, userID);
     }
 
-    //get Product from cart
+    //GET Product from Cart
 
     @GetMapping("/userCart/{userId}")
     public ResponseEntity<List<Product>> getProductsInUserCart(@PathVariable long userId) {
@@ -34,16 +35,9 @@ public class CartItemController {
         return ResponseEntity.ok(products);
     }
 
-    //CUSTOMER
-    @PutMapping("/update/{userID}")
-    public CartItem updateCartItem(@PathVariable Long userID, @RequestBody CartItem cartItem) {
-        return cartItemService.updateCartItem(userID, cartItem);
-    }
+    //UPDATE CART ITEM
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteCartItem(@PathVariable Long id) {
-        cartItemService.deleteCartItem(id);
-    }
+
 
 
 }

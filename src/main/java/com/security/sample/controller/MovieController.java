@@ -2,8 +2,10 @@ package com.security.sample.controller;
 
 
 import com.security.sample.dto.CinemaBookingPaymentDto;
+import com.security.sample.entity.CinemaBooking;
 import com.security.sample.entity.Movie;
 import com.security.sample.entity.Feedback;
+import com.security.sample.entity.Payment;
 import com.security.sample.service.BookingService;
 import com.security.sample.service.MovieService;
 import com.security.sample.service.FeedbackService;
@@ -75,16 +77,19 @@ public class MovieController {
         return feedbackService.updateFeedback(feedbackId, updatedFeedback);
     }
 
-//--------------------------------------------------------------payment
+//--------------------------------------------------------------Booking
 
-//Movie Booking and Payment
 
-    @PostMapping(path = "/booking-payment")
-    public ResponseEntity<String> payment(
-            @RequestBody CinemaBookingPaymentDto cinemaBookingPaymentDto) {
-        bookingService.saveBookingAndPayment( cinemaBookingPaymentDto);
+    @PostMapping(path = "/booking/{userId}")
+    public ResponseEntity<String> movieBooking(
+            @PathVariable long userId,
+            @RequestBody CinemaBooking cinemaBooking) {
+        bookingService.saveBooking(cinemaBooking,userId);
         return ResponseEntity.status(HttpStatus.OK).body("Data saved successfully");
     }
+
+//--------------------------------------------------------------payment
+
 
 }
 
