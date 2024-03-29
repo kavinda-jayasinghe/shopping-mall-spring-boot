@@ -2,20 +2,24 @@ package com.security.sample.service;
 
 
 import com.security.sample.dto.CinemaDto;
-import com.security.sample.entity.Cinema;
-import com.security.sample.repository.CinemaRepo;
+import com.security.sample.entity.Movie;
+import com.security.sample.repository.MovieBookingRepo;
+import com.security.sample.repository.MovieRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class CinemaService {
+public class MovieService {
     @Autowired
-    private CinemaRepo cinemaRepo;
+    private MovieRepo cinemaRepo;
+    @Autowired
+    private MovieBookingRepo movieBookingRepo;
 
-    public Cinema postMovie(Cinema cinema) {
-        return cinemaRepo.save(cinema);
+    public Movie postMovie(Movie movie) {
+        return cinemaRepo.save(movie);
 
     }
 
@@ -43,6 +47,7 @@ public class CinemaService {
         }
     }
 
+//delete movie
     public String deleteMovie(long id) {
         if (cinemaRepo.existsById(id)) {
             cinemaRepo.deleteById(id);
@@ -51,12 +56,30 @@ public class CinemaService {
             return "Movie with id " + id + " does not exist.";
         }
     }
+//get ALll movies
+    public List<Movie> getAllMovies() {
 
-    public List<Cinema> getAllMovies() {
         return cinemaRepo.findAll();
     }
 
-    public List<Cinema> searchMoviesByName(String name) {
+//get movie by name
+    public List<Movie> searchMoviesByName(String name) {
         return cinemaRepo.findByFilmNameContainingIgnoreCase(name);
+    }
+
+    //get movie by id
+
+
+    //counting available seats
+    public int getAvailableSeats(Long movieId) {
+        Movie movie = cinemaRepo.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
+        int totalSeats = movie.getSeats();
+        int bookedSeats = movieBookingRepo.getTotalBookedSeatsForMovie(movieId);
+        return totalSeats - bookedSeats;
+    }
+
+    public Movie GetMoviebyId(long id) {
+        Optional<Movie> movie = cinemaRepo.findById(id);
+        return movie.orElse(null);
     }
 }

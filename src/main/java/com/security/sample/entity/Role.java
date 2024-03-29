@@ -4,5 +4,6 @@ public enum Role {
 
     USER,
     ADMIN,
-    CINEMA
+    THEATER_OWNER,
+    PRODUCT_OWNER
 }

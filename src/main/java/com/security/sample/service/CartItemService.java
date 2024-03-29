@@ -17,26 +17,25 @@ public class CartItemService {
         return cartItemRepository.findAll();
     }
 
-    public CartItem getCartItemById(Long id) {
-        return cartItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("CartItem not found with id: " + id));
+    public CartItem getCartItemById(Long userID) {
+        return cartItemRepository.findById(userID)
+                .orElseThrow(() -> new RuntimeException("CartItem not found with id: " + userID));
     }
 
-    public CartItem addCartItem(CartItem cartItem) {
-        // You may add some validation or business logic here before saving
+    public CartItem addCartItem(CartItem cartItem,long userID) {
+        cartItem.setUserID(userID);
         return cartItemRepository.save(cartItem);
     }
 
-    public CartItem updateCartItem(Long id, CartItem cartItem) {
-        // Check if cartItem with given id exists
-        getCartItemById(id);
-        // You may add some validation or business logic here before updating
-        cartItem.setId(id);
+    public CartItem updateCartItem(Long userID, CartItem cartItem) {
+
+        getCartItemById(userID);
+
+
         return cartItemRepository.save(cartItem);
     }
 
     public void deleteCartItem(Long id) {
-        // Check if cartItem with given id exists
         getCartItemById(id);
         cartItemRepository.deleteById(id);
     }

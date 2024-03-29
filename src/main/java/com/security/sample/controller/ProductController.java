@@ -18,25 +18,26 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+            //ADMIN CUSTOMER
     @GetMapping("/get-all-products")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> productList = productService.findAll();
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
-
+//ADMIN
     @PostMapping("/post-product")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product savedProduct = productService.save(product);
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
-
+    //ADMIN CUSTOMER
     @GetMapping("/get-product-by-name/{productName}")
     public ResponseEntity<Product> getProductByName(@PathVariable String productName) {
         Optional<Product> productOptional = productService.findByProductName(productName);
         return productOptional.map(product -> new ResponseEntity<>(product, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
+    //ADMIN
     @PutMapping(path={"/update/{id}"})
 
     public ResponseEntity<StandardResponse> updateProgram(
@@ -50,7 +51,7 @@ public class ProductController {
         );
     }
 
-
+    //ADMIN CUSTOMER
     @DeleteMapping(
             path={"/delete-product/{id}"}
     )

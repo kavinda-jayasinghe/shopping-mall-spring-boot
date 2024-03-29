@@ -8,20 +8,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Cinema {
+@AllArgsConstructor
+@Data
+@Entity
+public class UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String filmName;
-    private String description;
-    private String showTime;
-    private String img;
-    private String duration;
-    private int seats;
-    private String date;
-    private String time;
+
+    private long userId;
+
+    private String contact;
+
+    private String image;
+
+    private String address;
 }

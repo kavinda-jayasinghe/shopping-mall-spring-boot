@@ -2,10 +2,10 @@ package com.security.sample.controller;
 
 
 import com.security.sample.dto.CinemaBookingPaymentDto;
-import com.security.sample.entity.Cinema;
+import com.security.sample.entity.Movie;
 import com.security.sample.entity.Feedback;
 import com.security.sample.service.BookingService;
-import com.security.sample.service.CinemaService;
+import com.security.sample.service.MovieService;
 import com.security.sample.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,17 +20,17 @@ import java.util.List;
 //if user(customers & sellers) is logged in to the system
 public class AuthenticatedUserController {
     @Autowired
-    private CinemaService cinemaService;
+    private MovieService movieService;
     @Autowired
     private FeedbackService feedbackService;
     @Autowired
     private BookingService bookingService;
 
-    //--------------------------------------------CINEMA-------------------------------------
+    //--------------------------------------------CINEMA THEATER-------------------------------------
     //get all movies
     @GetMapping("/get-all-movies")
-    public ResponseEntity<List<Cinema>> getAllMovies() {
-        List<Cinema> movies = cinemaService.getAllMovies();
+    public ResponseEntity<List<Movie>> getAllMovies() {
+        List<Movie> movies = movieService.getAllMovies();
         if (movies.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
@@ -41,8 +41,8 @@ public class AuthenticatedUserController {
 
     //get by name
     @GetMapping("/search-by-name/{name}")
-    public ResponseEntity<List<Cinema>> getByName(@PathVariable String name) {
-        List<Cinema> movies = cinemaService.searchMoviesByName(name);
+    public ResponseEntity<List<Movie>> getByName(@PathVariable String name) {
+        List<Movie> movies = movieService.searchMoviesByName(name);
 
         if (movies.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -77,8 +77,7 @@ public class AuthenticatedUserController {
 
 //--------------------------------------------------------------payment
 
-    //save
-
+//Movie Booking and Payment
 
     @PostMapping(path = "/booking-payment")
     public ResponseEntity<String> payment(
@@ -86,8 +85,8 @@ public class AuthenticatedUserController {
         bookingService.saveBookingAndPayment( cinemaBookingPaymentDto);
         return ResponseEntity.status(HttpStatus.OK).body("Data saved successfully");
     }
-//----------------------------------------------------------------clothing(customer)
-    //add to cart
+
+
 
 
 

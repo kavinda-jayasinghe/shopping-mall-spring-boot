@@ -1,20 +1,25 @@
 package com.security.sample.service;
 
 
+import com.security.sample.entity.CartItem;
 import com.security.sample.entity.Product;
 import com.security.sample.exception.NotFoundException;
+import com.security.sample.repository.CartItemRepository;
 import com.security.sample.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     public List<Product> findAll() {
         return productRepository.findAll();
@@ -52,5 +57,17 @@ public class ProductService {
         }else{
             throw new NotFoundException("not found customer for this id");
         }
+    }
+
+//get product from cart
+
+    public List<Product> getProductsInUserCart(long userId) {
+        List<CartItem> cartItems = cartItemRepository.findByUserID(userId);
+
+        List<Long> productIds = cartItems.stream()
+                .map(cartItem -> cartItem.getProduct().getId())
+                .collect(Collectors.toList());
+
+        return productRepository.findAllById(productIds);
     }
 }

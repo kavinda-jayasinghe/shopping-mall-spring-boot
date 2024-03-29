@@ -1,9 +1,6 @@
 package com.security.sample.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +17,9 @@ public class CinemaBooking {
     private String date;
     private String time;
     private int noOfSeats;
+
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 
 }
