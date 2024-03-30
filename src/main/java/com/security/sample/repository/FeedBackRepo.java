@@ -19,6 +19,6 @@ public interface FeedBackRepo extends JpaRepository<Feedback, Long> {
 
     @Query("SELECT u.firstName, u.lastName, f.comment, f.stars " +
             "FROM User u " +
-            "INNER JOIN Feedback f ON u.id = f.userId")
+            "INNER JOIN Feedback f ON u.id = f.userId"   )
     List<Object[]> getFeedbackWithUserInfo();
 }
