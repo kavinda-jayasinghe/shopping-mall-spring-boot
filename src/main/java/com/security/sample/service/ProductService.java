@@ -62,7 +62,7 @@ public class ProductService {
 //get product from cart
 
     public List<Product> getProductsInUserCart(long userId) {
-        List<CartItem> cartItems = cartItemRepository.findByUserID(userId);
+        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
 
         List<Long> productIds = cartItems.stream()
                 .map(cartItem -> cartItem.getProduct().getId())

@@ -21,5 +21,5 @@ public class CartItem {
 
     private int quantity;
 
-    private long userID;
+    private long userId;
 }

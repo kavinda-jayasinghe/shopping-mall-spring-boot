@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/cinema")
-public class CinemaController {
+public class TheaterOwnerController {
 
     @Autowired
     private MovieService movieService;
 
 
-    @GetMapping({"/forUser"})
-    @PreAuthorize("hasRole('CINEMA')")
-    public String forUser(){
-        return "This URL is only accessible to the cinema";
-    }
+//    @GetMapping({"/forUser"})
+//    @PreAuthorize("hasRole('CINEMA')")
+//    public String forUser(){
+//        return "This URL is only accessible to the cinema";
+//    }
 
     //CINEMA
     //create

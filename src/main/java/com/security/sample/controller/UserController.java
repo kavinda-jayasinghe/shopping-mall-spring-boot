@@ -25,12 +25,6 @@ public class UserController {
     private JdbcTemplate jdbcTemplate;
 
 
-    @GetMapping("/get-user-details")
-    public ResponseEntity<String> sayHello() {
-        return ResponseEntity.ok("Hi user");
-    }
-
-
     //ADD USER details to profile
     @PostMapping(path = "/user-profile/{id}")
     public ResponseEntity<StandardResponse> userSave(@RequestBody UserDetails userDetails, @PathVariable int id) {

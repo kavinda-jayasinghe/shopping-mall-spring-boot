@@ -80,7 +80,7 @@ public class MovieController {
 //--------------------------------------------------------------Booking
 
 
-    @PostMapping(path = "/booking/{userId}")
+    @PostMapping(path = "/movie-booking/{userId}")
     public ResponseEntity<String> movieBooking(
             @PathVariable long userId,
             @RequestBody CinemaBooking cinemaBooking) {
