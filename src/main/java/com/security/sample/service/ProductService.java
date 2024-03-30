@@ -55,7 +55,7 @@ public class ProductService {
             productRepository.deleteById(id);
             return true;
         }else{
-            throw new NotFoundException("not found customer for this id");
+            throw new NotFoundException("not found product for this id");
         }
     }
 

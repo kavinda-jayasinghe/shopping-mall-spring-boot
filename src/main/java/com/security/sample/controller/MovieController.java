@@ -23,8 +23,7 @@ import java.util.List;
 public class MovieController {
     @Autowired
     private MovieService movieService;
-    @Autowired
-    private FeedbackService feedbackService;
+
     @Autowired
     private BookingService bookingService;
 
@@ -53,29 +52,6 @@ public class MovieController {
         }
     }
 
-    //--------------------------------------------------------------FEEDBACK
-
-    //add feed back
-    @PostMapping("/feed-back/{userId}/{categoryId}")
-    public Feedback addFeedbackForItem(@PathVariable long userId, @PathVariable long categoryId, @RequestBody Feedback feedback) {
-        return feedbackService.addFeedback(userId, categoryId, feedback);
-    }
-    //get all feed back
-
-    @GetMapping("/get-all-feed-back")
-    public List<Object[]> getAllFeedbackWithUserNames() {
-        return feedbackService.getAllFeedbackWithUserName();
-    }
-
-    @DeleteMapping("/{feedbackId}")
-    public void deleteFeedback(@PathVariable Long feedbackId) {
-        feedbackService.deleteFeedback(feedbackId);
-    }
-
-    @PutMapping("/{feedbackId}")
-    public Feedback updateFeedback(@PathVariable Long feedbackId, @RequestBody Feedback updatedFeedback) {
-        return feedbackService.updateFeedback(feedbackId, updatedFeedback);
-    }
 
 //--------------------------------------------------------------Booking
 

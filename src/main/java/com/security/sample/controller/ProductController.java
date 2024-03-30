@@ -1,5 +1,8 @@
 package com.security.sample.controller;
+import com.security.sample.dto.FeedbackDto;
+import com.security.sample.entity.Feedback;
 import com.security.sample.entity.Product;
+import com.security.sample.service.FeedbackService;
 import com.security.sample.service.ProductService;
 import com.security.sample.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +20,10 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private FeedbackService feedbackService;
 
-            //ADMIN CUSTOMER
+            //ADMIN  & CUSTOMER
     @GetMapping("/get-all-products")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> productList = productService.findAll();
@@ -40,7 +45,7 @@ public class ProductController {
     //ADMIN
     @PutMapping(path={"/update/{id}"})
 
-    public ResponseEntity<StandardResponse> updateProgram(
+    public ResponseEntity<StandardResponse> updateProduct(
             @RequestBody Product product,
             @PathVariable(value = "id") int id){
         String updated=productService.productUpdate(product,id);
@@ -51,7 +56,7 @@ public class ProductController {
         );
     }
 
-    //ADMIN CUSTOMER
+    //ADMIN
     @DeleteMapping(
             path={"/delete-product/{id}"}
     )
@@ -60,4 +65,34 @@ public class ProductController {
         boolean product=productService.productDelete(id);
         return "deleted";
     }
+
+
+    //--------------------------------------------------------------FEEDBACK
+
+    //add feed back
+    @PostMapping("/feed-back/{userId}/{productId}")
+    public Feedback addFeedbackForItem(@PathVariable long userId, @PathVariable long productId, @RequestBody FeedbackDto feedbackDto) {
+        return feedbackService.addFeedback(userId, productId, feedbackDto);
+    }
+    //get all feed back
+    @GetMapping("/get-all-feed-back")
+    public ResponseEntity<List<Object[]>> getAllFeedBack() {
+        List<Object[]> feedbackWithUserInfo = feedbackService.getAllFeedBack();
+        return new ResponseEntity<>(feedbackWithUserInfo, HttpStatus.OK);
+    }
+    @GetMapping("/get-all-feed-back/{userId}")
+    public List<Object[]> getFeedbackWithUserId(@PathVariable long userId) {
+        return feedbackService.getFeedbackWithUserId(userId);
+    }
+
+    @DeleteMapping("/delete-feed-back/{feedbackId}")
+    public void deleteFeedback(@PathVariable Long feedbackId) {
+        feedbackService.deleteFeedback(feedbackId);
+    }
+
+    @PutMapping("/update-feed-back/{feedbackId}")
+    public Feedback updateFeedback(@PathVariable Long feedbackId, @RequestBody Feedback updatedFeedback) {
+        return feedbackService.updateFeedback(feedbackId, updatedFeedback);
+    }
+
 }

@@ -1,7 +1,9 @@
 package com.security.sample.service;
 
 
+import com.security.sample.dto.FeedbackDto;
 import com.security.sample.entity.Feedback;
+import com.security.sample.exception.NotFoundException;
 import com.security.sample.repository.FeedBackRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,57 +17,31 @@ public class FeedbackService {
     @Autowired
     private FeedBackRepo feedbackRepository;
 
-    public Feedback addFeedback(long userId, long categoryId, Feedback feedback) {
+
+    public Feedback addFeedback(long userId, long productId, FeedbackDto feedbackDto) {
+        Feedback feedback = new Feedback();
         feedback.setUserId(userId);
-        feedback.setCategoryId(categoryId);
+        feedback.setProductId(productId);
+        feedback.setStars(feedbackDto.getStars());
+        feedback.setComment(feedbackDto.getComment());
         return feedbackRepository.save(feedback);
     }
 
-    public List<Object[]> getAllFeedbackWithUserName() {
-        return feedbackRepository.findAllFeedbackWithUserName();
+    public List<Object[]> getFeedbackWithUserId(long userId) {
+
+        return feedbackRepository.getFeedbackWithUserId(userId);
     }
 
-//    public void deleteFeedback(Long feedbackId) {
-//        Optional<Feedback> feedbackOptional = feedbackRepository.findById(feedbackId);
-//        if (feedbackOptional.isPresent()) {
-//            Feedback feedback = feedbackOptional.get();
-//            // Check if the current user is the owner of the feedback
-//            String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-//            if (currentUser.equals(feedback.getUserId().getClass().getName())) {
-//                feedbackRepository.deleteById(feedbackId);
-//            } else {
-//                // Handle unauthorized deletion
-//                throw new UnauthorizedException("You are not authorized to delete this feedback.");
-//            }
-//        } else {
-//
-//            throw new FeedbackNotFoundException("Feedback not found.");
-//        }
-//    }
 
     public void deleteFeedback(Long feedbackId) {
-        feedbackRepository.deleteById(feedbackId);
+        Optional<Feedback> feedbackOptional = feedbackRepository.findById(feedbackId);
+        if (feedbackOptional.isPresent()) {
+            feedbackRepository.deleteById(feedbackId);
+        } else {
+            throw new NotFoundException("No feedback found with ID: " + feedbackId);
+        }
     }
 
-//    public Feedback updateFeedback(Long feedbackId, Feedback updatedFeedback) {
-//        Optional<Feedback> existingFeedbackOptional = feedbackRepository.findById(feedbackId);
-//        if (existingFeedbackOptional.isPresent()) {
-//            Feedback existingFeedback = existingFeedbackOptional.get();
-//
-//            String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-//            if (currentUser.equals(existingFeedback.getUserId().getClass().getName())) {
-//                existingFeedback.setStars(updatedFeedback.getStars());
-//                existingFeedback.setComment(updatedFeedback.getComment());
-//
-//                return feedbackRepository.save(existingFeedback);
-//            } else {
-//
-//                throw new UnauthorizedException("You are not authorized to update this feedback.");
-//            }
-//        } else {
-//            throw new FeedbackNotFoundException("Feedback not found.");
-//        }
-//    }
 
     public Feedback updateFeedback(Long feedbackId, Feedback updatedFeedback) {
         Optional<Feedback> existingFeedbackOptional = feedbackRepository.findById(feedbackId);
@@ -77,5 +53,10 @@ public class FeedbackService {
         } else {
             return null;
         }
+    }
+
+
+    public List<Object[]> getAllFeedBack() {
+        return feedbackRepository.getFeedbackWithUserInfo();
     }
 }
