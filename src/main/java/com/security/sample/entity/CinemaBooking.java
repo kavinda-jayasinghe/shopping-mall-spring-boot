@@ -17,9 +17,5 @@ public class CinemaBooking {
     private String date;
     private String time;
     private int noOfSeats;
-
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
-
+    private Long movieId;
 }
