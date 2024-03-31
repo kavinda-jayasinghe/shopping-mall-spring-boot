@@ -51,12 +51,11 @@ public class ProductService {
 
 
     public boolean productDelete(long id) {
-        if(productRepository.existsById(id)){
-            productRepository.deleteById(id);
-            return true;
-        }else{
-            throw new NotFoundException("not found product for this id");
-        }
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Product not found for id: " + id));
+
+        productRepository.delete(product);
+        return true;
     }
 
 //get product from cart
@@ -65,7 +64,7 @@ public class ProductService {
         List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
 
         List<Long> productIds = cartItems.stream()
-                .map(cartItem -> cartItem.getProduct().getId())
+                .map(cartItem -> cartItem.getProductId())
                 .collect(Collectors.toList());
 
         return productRepository.findAllById(productIds);

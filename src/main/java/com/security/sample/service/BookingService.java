@@ -27,7 +27,6 @@ public class BookingService {
         CinemaBooking cinemaBooking=new CinemaBooking();
 
         cinemaBooking.setUserId(userId);
-        cinemaBooking.setBookingId(movieBookingDto.getBookingId());
         cinemaBooking.setDate(movieBookingDto.getDate());
         cinemaBooking.setTime(movieBookingDto.getTime());
         cinemaBooking.setNoOfSeats(movieBookingDto.getNoOfSeats());

@@ -47,10 +47,12 @@ public class CartItemService {
     public boolean itemDelete(long userId, long productId) {
         Optional<CartItem> optionalCartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);
         if (optionalCartItem.isPresent()) {
-            cartItemRepository.deleteById(productId);
+            CartItem cartItem = optionalCartItem.get();
+            cartItemRepository.deleteById(cartItem.getId()); // Delete by cart item's ID
             return true;
         } else {
-            throw new NotFoundException("not found customer for this id");
+            throw new NotFoundException("Cart item not found for this user and product");
         }
     }
+
 }

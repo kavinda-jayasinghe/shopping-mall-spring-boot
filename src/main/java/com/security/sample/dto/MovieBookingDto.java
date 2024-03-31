@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 public class MovieBookingDto {
 
-    private long bookingId;
     private String date;
     private String time;
     private int noOfSeats;

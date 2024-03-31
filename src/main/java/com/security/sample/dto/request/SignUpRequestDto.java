@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 
-public class SignUpRequestDto {
+public class
+SignUpRequestDto {
 
     private String firstName;
 
